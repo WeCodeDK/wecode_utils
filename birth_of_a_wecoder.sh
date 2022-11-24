@@ -118,7 +118,7 @@ print_green() {
 }
 
 install_commands() {
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/install_commands.sh?$RANDOM)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/install_commands.sh)"
 }
 
 clear
