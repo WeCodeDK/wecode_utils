@@ -252,7 +252,7 @@ else
 fi
 
 
-echo ""
+echo "Installing Harvest"
 if test ! -d "/Applications/Harvest.app"; then
   echo "Please install Harvest from App Store"
 
@@ -271,7 +271,6 @@ else
 fi
 
 echo ""
-
 prompt="Do you want to install commands? (y/n)"
 while true; do
     read -p "$prompt" yn
