@@ -137,7 +137,7 @@ echo "Installing Homebrew"
 # check if homebrew is installed
 if test ! $(which brew); then
   # install homebrew
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 else
   print_green "Homebrew is already installed"
 fi
