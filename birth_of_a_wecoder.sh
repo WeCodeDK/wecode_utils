@@ -17,6 +17,31 @@
 # 12. harvest
 # 13. clickup
 
+vscode_extensions=(
+    Vue.volar
+    ms-python.python
+    neilding.language-liquid
+    eamodio.gitlens
+    zobo.php-intellisense
+    xdebug.php-debug
+    ryannaddy.laravel-artisan
+    onecentlin.laravel-blade
+    dbaeumer.vscode-eslint
+    christian-kohler.path-intellisense
+    bmewburn.vscode-intelephense-client
+    esbenp.prettier-vscode
+    dbankier.vscode-quick-select
+    naumovs.color-highlight
+    vscjava.vscode-gradle
+)
+
+install_vscode_extensions() {
+    echo "Installing Visual Studio Code Extensions.."
+    for extension in "${vscode_extensions[@]}"
+    do
+        code --install-extension $extension
+    done
+}
 # clear the screen
 clear
 
@@ -75,9 +100,24 @@ fi
 
 echo "Installing Visual Studio Code"
 # check if visual studio code is installed and echo if it is
-if test ! $(which code); then
+if test ! $(which cod1e); then
   # install visual studio code
   brew install --cask visual-studio-code
+
+  # add visual studio code to path
+  echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"' >> ~/.zshrc
+
+  # ask the user if they want to install the extensions
+  prompt="Do you want to install the extensions for VSCode? (y/n)"
+  while true; do
+      read -p "$prompt" yn
+      case $yn in
+          [Yy]* ) install_vscode_extensions; break;;
+          [Nn]* ) break;;
+          * ) echo "Please answer yes or no.";;
+      esac
+  done
+
 else
   echo "Visual Studio Code already installed"
 fi
@@ -158,10 +198,23 @@ else
 fi
 
 echo ""
-echo "Please install Harvest from App Store"
-open "macappstores://itunes.apple.com/app/id506189836"
+if test ! -d "/Applications/Harvest.app"; then
+  echo "Please install Harvest from App Store"
 
-# sleep for 2 seconds
+  # Ask the user to press enter to continue
+  prompt="Press enter to open App Store"
+  while true; do
+      read -p "$prompt" yn
+      case $yn in
+          * ) break;;
+      esac
+  done
+
+  open "macappstores://itunes.apple.com/app/id506189836"
+else
+  echo "Harvest already installed"
+fi
+
 sleep 1
 
 echo ""
