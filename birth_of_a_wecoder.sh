@@ -61,8 +61,15 @@ print_welcome() {
       ╚══╝╚══╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝                    
         ╚══╝╚══╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝                    
   "
+}
 
-  # Tell the user what programs will be installed
+print_options_list() {
+  echo "1. All"
+  echo "2. Applications"
+  echo "3. Commands"
+}
+
+print_application_list() {
   echo "The following programs will be installed:"
   echo "  1. Homebrew - Package Manager"
   echo "  2. Command Line Tools - Command Line Tools"
@@ -121,13 +128,8 @@ install_commands() {
   /bin/bash -c "$(curl -fsSL -H 'Cache-Control: no-cache, no-store' https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/install_commands.sh)"
 }
 
-clear
-print_welcome
-prompt_continue
-
-echo ""
-
-echo "Installing Homebrew"
+install_applications() {
+  echo "Installing Homebrew"
 # check if homebrew is installed
 if test ! $(which brew); then
   # install homebrew
@@ -267,21 +269,32 @@ if test ! -d "/Applications/Harvest.app"; then
 else
   print_green "Harvest already installed"
 fi
+}
+
+continue_with_applications() {
+  echo "";
+  print_application_list
+  prompt_continue
+  install_applications
+}
+
+clear
+print_welcome
+
+# let the user choose what to install
+print_options_list
+read -p "Choose what to install: " option
+
+# install the selected option
+case $option in
+  1) continue_with_applications;install_commands;echo ".. Close this window and open a new terminal window to start using the new commands";;
+  2) continue_with_applications;;
+  3) install_commands;echo ".. Close this window and open a new terminal window to start using the new commands";;
+  *) echo "Please choose a valid option";exit;
+esac
 
 echo ""
-prompt="Do you want to install commands? (y/n)"
-while true; do
-    read -p "$prompt" yn
-    case $yn in
-        [Yy]* ) install_commands; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
-
-sleep 1
+echo -e "${green}Done!${default} now you can start programming 🚀 😎"
 
 echo ""
-echo "- All done! Now you can start coding 😎"
 
-echo ".. Close this window and open a new terminal window to start using the new commands"
