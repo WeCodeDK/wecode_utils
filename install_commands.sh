@@ -2,7 +2,7 @@
 
 echo -e "\n\033[0;33mInfo: \033[0;37mInstalling cphp.."
 
-sudo curl -s https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/commands/change_php.sh > /usr/local/bin/cphp
+sudo curl -s https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/commands/change_php.sh >> /usr/local/bin/cphp
 sudo chmod +x /usr/local/bin/cphp
 # if the last two commands fail, the script will exit
 if [ $? -ne 0 ]; then
