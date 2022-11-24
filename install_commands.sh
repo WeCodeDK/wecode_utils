@@ -7,7 +7,8 @@ if [ ! -d "/usr/local/bin" ]; then
     sudo mkdir /usr/local/bin
 fi
 
-sudo curl -s https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/commands/change_php.sh >> /usr/local/bin/cphp
+sudo curl -s https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/commands/change_php.sh > change_php.sh
+sudo mv change_php.sh /usr/local/bin/cphp
 sudo chmod +x /usr/local/bin/cphp
 # if the last two commands fail, the script will exit
 if [ $? -ne 0 ]; then
