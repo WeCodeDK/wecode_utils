@@ -117,6 +117,16 @@ print_green() {
   echo ""
 }
 
+install_commands() {
+  git clone git@github.com:WeCodeDK/wecode_utils.git
+  cd wecode_utils
+  chmod +x install_commands.sh
+  ./install_commands.sh
+
+  cd ..
+  rm -rf wecode_utils
+}
+
 clear
 print_welcome
 prompt_continue
@@ -242,6 +252,18 @@ else
 fi
 
 echo ""
+
+prompt="Do you want to install commands? (y/n)"
+while true; do
+    read -p "$prompt" yn
+    case $yn in
+        [Yy]* ) install_commands; break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
+
+echo ""
 if test ! -d "/Applications/Harvest.app"; then
   echo "Please install Harvest from App Store"
 
@@ -258,14 +280,6 @@ if test ! -d "/Applications/Harvest.app"; then
 else
   print_green "Harvest already installed"
 fi
-
-git clone git@github.com:WeCodeDK/wecode_utils.git
-cd wecode_utils
-chmod +x install_commands.sh
-./install_commands.sh
-
-cd ..
-rm -rf wecode_utils
 
 sleep 1
 
