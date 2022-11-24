@@ -1,5 +1,18 @@
 #!/bin/bash -i
 
+help="Usage: cphp [version]
+
+Example: cphp 8.1
+
+Available versions:
+$(brew search php | grep php@ | sed 's/php@//g')
+"
+
+if [ "$1" == "" ]; then
+    echo "$help"
+    exit
+fi
+
 echo -e "\n\033[0;33mInfo: \033[0;37mUnlinking current php.."
 brew unlink php 2>&1 >/dev/null
 
