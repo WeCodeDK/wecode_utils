@@ -56,9 +56,9 @@ print_welcome() {
 }
 
 print_options_list() {
-  echo "1. All"
-  echo "2. Applications"
-  echo "3. Commands"
+  echo "1. Applications"
+  echo "2. Commands"
+  echo "3. Both"
 }
 
 print_application_list() {
@@ -285,12 +285,12 @@ prompt_options() {
 
   # install the selected option
   case $option in
-  1)
+  1) continue_with_applications ;;
+  2) install_commands ;;
+  3)
     continue_with_applications
     install_commands
     ;;
-  2) continue_with_applications ;;
-  3) install_commands ;;
   *)
     echo "Please choose a valid option"
     exit
