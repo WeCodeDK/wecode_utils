@@ -264,6 +264,9 @@ cd wecode_utils
 chmod +x install_commands.sh
 ./install_commands.sh
 
+cd ..
+rm -rf wecode_utils
+
 sleep 1
 
 echo ""
