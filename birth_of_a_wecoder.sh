@@ -283,6 +283,7 @@ print_welcome
 
 # let the user choose what to install
 print_options_list
+echo ""
 read -p "Choose what to install: " option
 
 # install the selected option
