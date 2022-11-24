@@ -118,13 +118,7 @@ print_green() {
 }
 
 install_commands() {
-  git clone git@github.com:WeCodeDK/wecode_utils.git
-  cd wecode_utils
-  chmod +x install_commands.sh
-  ./install_commands.sh
-
-  cd ..
-  rm -rf wecode_utils
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/install_commands.sh)"
 }
 
 clear
