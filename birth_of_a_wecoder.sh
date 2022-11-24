@@ -18,33 +18,25 @@
 # 13. clickup
 
 vscode_extensions=(
-    Vue.volar
-    ms-python.python
-    neilding.language-liquid
-    eamodio.gitlens
-    zobo.php-intellisense
-    xdebug.php-debug
-    ryannaddy.laravel-artisan
-    onecentlin.laravel-blade
-    dbaeumer.vscode-eslint
-    christian-kohler.path-intellisense
-    bmewburn.vscode-intelephense-client
-    esbenp.prettier-vscode
-    dbankier.vscode-quick-select
-    naumovs.color-highlight
-    vscjava.vscode-gradle
+  Vue.volar
+  ms-python.python
+  neilding.language-liquid
+  eamodio.gitlens
+  zobo.php-intellisense
+  xdebug.php-debug
+  ryannaddy.laravel-artisan
+  onecentlin.laravel-blade
+  dbaeumer.vscode-eslint
+  christian-kohler.path-intellisense
+  bmewburn.vscode-intelephense-client
+  esbenp.prettier-vscode
+  dbankier.vscode-quick-select
+  naumovs.color-highlight
+  vscjava.vscode-gradle
 )
 
 green='\033[0;32m'
 default='\033[0m'
-
-install_vscode_extensions() {
-    echo "Installing Visual Studio Code Extensions.."
-    for extension in "${vscode_extensions[@]}"
-    do
-        code --install-extension $extension
-    done
-}
 
 print_welcome() {
   echo "
@@ -86,18 +78,6 @@ print_application_list() {
   echo ""
 }
 
-prompt_continue() {
-  prompt="Do you want to continue? (y/n)"
-  while true; do
-      read -p "$prompt" yn
-      case $yn in
-          [Yy]* ) break;;
-          [Nn]* ) exit;;
-          * ) echo "Please answer yes or no.";;
-      esac
-  done
-}
-
 print_extension_list() {
   echo ""
   echo "The following extensions will be installed:"
@@ -119,6 +99,25 @@ print_extension_list() {
   echo ""
 }
 
+install_vscode_extensions() {
+  echo "Installing Visual Studio Code Extensions.."
+  for extension in "${vscode_extensions[@]}"; do
+    code --install-extension $extension
+  done
+}
+
+prompt_continue() {
+  prompt="Do you want to continue? (y/n)"
+  while true; do
+    read -p "$prompt" yn
+    case $yn in
+    [Yy]*) break ;;
+    [Nn]*) exit ;;
+    *) echo "Please answer yes or no." ;;
+    esac
+  done
+}
+
 print_green() {
   echo -e "${green}$1..${default}"
   echo ""
@@ -126,176 +125,186 @@ print_green() {
 
 install_commands() {
   /bin/bash -c "$(curl -fsSL -H 'Cache-Control: no-cache, no-store' https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/install_commands.sh)"
+  echo ".. Close this window and open a new terminal window to start using the new commands"
 }
 
 install_applications() {
   echo "Installing Homebrew"
-# check if homebrew is installed
-if test ! $(which brew); then
-  # install homebrew
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-  # add to path
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/$USER/.zprofile
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-  
-else
-  print_green "Homebrew is already installed"
-fi
+  # check if homebrew is installed
+  if test ! $(which brew); then
+    # install homebrew
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    # add to path
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >>/Users/$USER/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
 
-echo "Installing Command Line Tools"
-# check if xcode-select is installed
-if xcode-select -p &> /dev/null; then
+  else
+    print_green "Homebrew is already installed"
+  fi
+
+  echo "Installing Command Line Tools"
+  # check if xcode-select is installed
+  if xcode-select -p &>/dev/null; then
     print_green "Command Line Tools already installed"
-    
-else
+
+  else
     xcode-select --install
-fi
+  fi
 
-echo "Installing Visual Studio Code"
-# check if visual studio code is installed and echo if it is
-if test ! $(which code); then
-  # install visual studio code
-  brew install --cask visual-studio-code
+  echo "Installing Visual Studio Code"
+  # check if visual studio code is installed and echo if it is
+  if test ! $(which code); then
+    # install visual studio code
+    brew install --cask visual-studio-code
 
-  # add visual studio code to path
-  echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"' >> ~/.zshrc
+    # add visual studio code to path
+    echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"' >>~/.zshrc
 
-  # ask the user if they want to install the extensions
-  print_extension_list
-  prompt="Do you want to install the extensions for VSCode? (y/n)"
-  while true; do
+    # ask the user if they want to install the extensions
+    print_extension_list
+    prompt="Do you want to install the extensions for VSCode? (y/n)"
+    while true; do
       read -p "$prompt" yn
       case $yn in
-          [Yy]* ) install_vscode_extensions; break;;
-          [Nn]* ) break;;
-          * ) echo "Please answer yes or no.";;
+      [Yy]*)
+        install_vscode_extensions
+        break
+        ;;
+      [Nn]*) break ;;
+      *) echo "Please answer yes or no." ;;
       esac
-  done
+    done
 
-else
-  print_green "Visual Studio Code is already installed"
-fi
+  else
+    print_green "Visual Studio Code is already installed"
+  fi
 
+  echo "Installing Composer"
+  # check if composer is installed and echo if it is
+  if test ! $(which composer); then
+    # install composer
+    brew install composer
+  else
+    print_green "Composer already installed"
+  fi
 
-echo "Installing Composer"
-# check if composer is installed and echo if it is
-if test ! $(which composer); then
-  # install composer
-  brew install composer
-else
-  print_green "Composer already installed"
-fi
+  echo "Installing NodeJS"
+  # check if nodejs is installed and echo if it is
+  if test ! $(which node); then
+    # install nodejs
+    brew install node
+  else
+    print_green "NodeJS already installed"
+  fi
 
-echo "Installing NodeJS"
-# check if nodejs is installed and echo if it is
-if test ! $(which node); then
-  # install nodejs
-  brew install node
-else
-  print_green "NodeJS already installed"
-fi
+  echo "Installing NPM"
+  # check if npm is installed and echo if it is
+  if test ! $(which npm); then
+    # install npm
+    brew install npm
+  else
+    print_green "NPM already installed"
+  fi
 
-echo "Installing NPM"
-# check if npm is installed and echo if it is
-if test ! $(which npm); then
-  # install npm
-  brew install npm
-else
-  print_green "NPM already installed"
-fi
+  echo "Installing Sequel Ace"
+  # check if sequel ace is installed and echo if it is
+  # test if it is already in /Applications/Sequel Ace.app
+  if test ! -d "/Applications/Sequel Ace.app"; then
+    # install sequel ace
+    brew install --cask sequel-ace
+  else
+    print_green "Sequel Ace already installed"
+  fi
 
-echo "Installing Sequel Ace"
-# check if sequel ace is installed and echo if it is
-# test if it is already in /Applications/Sequel Ace.app
-if test ! -d "/Applications/Sequel Ace.app"; then
-  # install sequel ace
-  brew install --cask sequel-ace
-else
-  print_green "Sequel Ace already installed"
-fi
+  echo "Installing Slack"
+  # check if slack is installed and echo if it is
+  if test ! -d "/Applications/Slack.app"; then
+    # install slack
+    brew install --cask slack
+  else
+    print_green "Slack already installed"
+  fi
 
+  echo "Installing Google Chrome"
+  # check if google chrome is installed and echo if it is
+  if test ! -d "/Applications/Slack.app"; then
+    # install google chrome
+    brew install --cask google-chrome
+  else
+    print_green "Google Chrome already installed"
+  fi
 
-echo "Installing Slack"
-# check if slack is installed and echo if it is
-if test ! -d "/Applications/Slack.app"; then
-  # install slack
-  brew install --cask slack
-else
-  print_green "Slack already installed"
-fi
+  echo "Installing Postman"
+  # check if postman is installed and echo if it is
+  if test ! -d "/Applications/Postman.app"; then
+    # install postman
+    brew install --cask postman
+  else
+    print_green "Postman already installed"
+  fi
 
-echo "Installing Google Chrome"
-# check if google chrome is installed and echo if it is
-if test ! -d "/Applications/Slack.app"; then
-  # install google chrome
-  brew install --cask google-chrome
-else
-  print_green "Google Chrome already installed"
-fi
+  echo "Installing ClickUp"
+  # check if clickup is installed and echo if it is
+  if test ! -d "/Applications/ClickUp.app"; then
+    # install clickup
+    brew install --cask clickup
+  else
+    print_green "ClickUp already installed"
+  fi
 
-echo "Installing Postman"
-# check if postman is installed and echo if it is
-if test ! -d "/Applications/Postman.app"; then
-  # install postman
-  brew install --cask postman
-else
-  print_green "Postman already installed"
-fi
+  echo "Installing Harvest"
+  if test ! -d "/Applications/Harvest.app"; then
+    echo "Please install Harvest from App Store"
 
-echo "Installing ClickUp"
-# check if clickup is installed and echo if it is
-if test ! -d "/Applications/ClickUp.app"; then
-  # install clickup
-  brew install --cask clickup
-else
-  print_green "ClickUp already installed"
-fi
-
-
-echo "Installing Harvest"
-if test ! -d "/Applications/Harvest.app"; then
-  echo "Please install Harvest from App Store"
-
-  # Ask the user to press enter to continue
-  prompt="Press enter to open App Store"
-  while true; do
+    # Ask the user to press enter to continue
+    prompt="Press enter to open App Store"
+    while true; do
       read -p "$prompt" yn
       case $yn in
-          * ) break;;
+      *) break ;;
       esac
-  done
+    done
 
-  open "macappstores://itunes.apple.com/app/id506189836"
-else
-  print_green "Harvest already installed"
-fi
+    open "macappstores://itunes.apple.com/app/id506189836"
+  else
+    print_green "Harvest already installed"
+  fi
 }
 
 continue_with_applications() {
-  echo "";
+  echo ""
   print_application_list
   prompt_continue
   install_applications
 }
 
+prompt_options() {
+  print_options_list
+  echo ""
+  read -p "Choose what to install: " option
+
+  # install the selected option
+  case $option in
+  1)
+    continue_with_applications
+    install_commands
+    ;;
+  2) continue_with_applications ;;
+  3) install_commands ;;
+  *)
+    echo "Please choose a valid option"
+    exit
+    ;;
+  esac
+}
+
+## Main ##
+
 clear
 print_welcome
-
-# let the user choose what to install
-print_options_list
-echo ""
-read -p "Choose what to install: " option
-
-# install the selected option
-case $option in
-  1) continue_with_applications;install_commands;echo ".. Close this window and open a new terminal window to start using the new commands";;
-  2) continue_with_applications;;
-  3) install_commands;echo ".. Close this window and open a new terminal window to start using the new commands";;
-  *) echo "Please choose a valid option";exit;
-esac
+prompt_options
 
 echo ""
 echo -e "${green}Done!${default} now you can start programming 🚀 😎"
 
 echo ""
-
