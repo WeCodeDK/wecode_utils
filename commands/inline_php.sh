@@ -12,15 +12,15 @@ If a version is specified and it is not installed, it will be installed
 Available versions:
 "
 
-# if the first argument is not a version, then we assume that the user wants to run the default php version
-if [[ "$1" != "7."* ]] && [[ "$1" != "8."* ]]; then
-    php $1 $2 $3 $4 $5 $6 $7 $8 $9
-    exit
-fi
-
 if [ "$1" == "-h" ]; then
     echo "$help 
 $(brew search php | grep php@ | sed 's/php@//g')"
+    exit
+fi
+
+# if the first argument is not a version, then we assume that the user wants to run the default php version
+if [[ "$1" != "7."* ]] && [[ "$1" != "8."* ]]; then
+    php $1 $2 $3 $4 $5 $6 $7 $8 $9
     exit
 fi
 
