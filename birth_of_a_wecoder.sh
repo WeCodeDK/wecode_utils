@@ -138,6 +138,10 @@ echo "Installing Homebrew"
 if test ! $(which brew); then
   # install homebrew
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  # add to path
+  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  
 else
   print_green "Homebrew is already installed"
 fi
