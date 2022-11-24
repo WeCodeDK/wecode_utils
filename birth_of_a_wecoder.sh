@@ -118,7 +118,7 @@ print_green() {
 }
 
 install_commands() {
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/install_commands.sh)"
+  /bin/bash -c "$(curl -fsSL -H 'Cache-Control: no-cache, no-store' https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/install_commands.sh)"
 }
 
 clear
