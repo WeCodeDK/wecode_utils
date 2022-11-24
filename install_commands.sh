@@ -7,6 +7,12 @@ if [ ! -d "/usr/local/bin" ]; then
     sudo mkdir /usr/local/bin
 fi
 
+
+# if the command already exists, delete it
+if [ -f "/usr/local/bin/cphp" ]; then
+    sudo rm /usr/local/bin/cphp
+fi
+
 curl -s https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/commands/change_php.sh > change_php.sh
 sudo mv change_php.sh /usr/local/bin/cphp
 sudo chmod +x /usr/local/bin/cphp
@@ -25,6 +31,11 @@ echo -e "\033[0;33mInfo: \033[0;37mUsage: cphp 8.1\n"
 
 
 echo -e "\n\033[0;33mInfo: \033[0;37mInstalling iphp.."
+
+# if the command already exists, delete it
+if [ -f "/usr/local/bin/iphp" ]; then
+    sudo rm /usr/local/bin/iphp
+fi
 
 curl -s https://raw.githubusercontent.com/WeCodeDK/wecode_utils/main/commands/inline_php.sh > inline_php.sh
 sudo mv inline_php.sh /usr/local/bin/iphp
