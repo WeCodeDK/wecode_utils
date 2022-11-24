@@ -100,7 +100,7 @@ fi
 
 echo "Installing Visual Studio Code"
 # check if visual studio code is installed and echo if it is
-if test ! $(which cod1e); then
+if test ! $(which code); then
   # install visual studio code
   brew install --cask visual-studio-code
 
