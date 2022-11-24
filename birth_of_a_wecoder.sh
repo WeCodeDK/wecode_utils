@@ -259,6 +259,11 @@ else
   print_green "Harvest already installed"
 fi
 
+git clone git@github.com:WeCodeDK/wecode_utils.git
+cd wecode_utils
+chmod +x install_commands.sh
+./install_commands.sh
+
 sleep 1
 
 echo ""
