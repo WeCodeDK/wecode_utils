@@ -251,17 +251,6 @@ else
   print_green "ClickUp already installed"
 fi
 
-echo ""
-
-prompt="Do you want to install commands? (y/n)"
-while true; do
-    read -p "$prompt" yn
-    case $yn in
-        [Yy]* ) install_commands; break;;
-        [Nn]* ) break;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
 
 echo ""
 if test ! -d "/Applications/Harvest.app"; then
@@ -280,6 +269,18 @@ if test ! -d "/Applications/Harvest.app"; then
 else
   print_green "Harvest already installed"
 fi
+
+echo ""
+
+prompt="Do you want to install commands? (y/n)"
+while true; do
+    read -p "$prompt" yn
+    case $yn in
+        [Yy]* ) install_commands; break;;
+        [Nn]* ) break;;
+        * ) echo "Please answer yes or no.";;
+    esac
+done
 
 sleep 1
 
