@@ -35,6 +35,9 @@ vscode_extensions=(
     vscjava.vscode-gradle
 )
 
+green='\033[0;32m'
+default='\033[0m'
+
 install_vscode_extensions() {
     echo "Installing Visual Studio Code Extensions.."
     for extension in "${vscode_extensions[@]}"
@@ -42,44 +45,81 @@ install_vscode_extensions() {
         code --install-extension $extension
     done
 }
-# clear the screen
+
+print_welcome() {
+  echo "
+  ██╗    ██╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗
+  ██║    ██║██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝
+  ██║ █╗ ██║█████╗  ██║     ██║   ██║██║  ██║█████╗  
+  ██║ █╗ ██║█████╗  ██║     ██║   ██║██║  ██║█████╗  
+  ██║ █╗ ██║█████╗  ██║     ██║   ██║██║  ██║█████╗  
+  ██║███╗██║██╔══╝  ██║     ██║   ██║██║  ██║██╔══╝  
+  ██║███╗██║██╔══╝  ██║     ██║   ██║██║  ██║██╔══╝  
+  ██║███╗██║██╔══╝  ██║     ██║   ██║██║  ██║██╔══╝  
+    ╚███╔███╔╝███████╗╚██████╗╚██████╔╝██████╔╝███████╗
+    ╚══╝╚══╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝                    
+      ╚══╝╚══╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝                    
+        ╚══╝╚══╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝                    
+  "
+
+  # Tell the user what programs will be installed
+  echo "The following programs will be installed:"
+  echo "  1. Homebrew - Package Manager"
+  echo "  2. Command Line Tools - Command Line Tools"
+  echo "  3. Visual Studio Code - Code Editor"
+  echo "  4. Composer - PHP Package Manager"
+  echo "  5. NodeJS - JavaScript Runtime"
+  echo "  6. NPM - Node Package Manager"
+  echo "  7. Sequel Ace - MySQL Client"
+  echo "  8. Slack - Team Communication"
+  echo "  9. Google Chrome - Web Browser"
+  echo "  10. Postman - API Testing"
+  echo "  11. Harvest - Time Tracking"
+  echo "  12. ClickUp - Task Management"
+  echo ""
+}
+
+prompt_continue() {
+  prompt="Do you want to continue? (y/n)"
+  while true; do
+      read -p "$prompt" yn
+      case $yn in
+          [Yy]* ) break;;
+          [Nn]* ) exit;;
+          * ) echo "Please answer yes or no.";;
+      esac
+  done
+}
+
+print_extension_list() {
+  echo ""
+  echo "The following extensions will be installed:"
+  echo "  1. Vue Volar - Vue 3 Support"
+  echo "  2. Python - Python Support"
+  echo "  3. Liquid - Liquid Support"
+  echo "  4. GitLens - Git Support"
+  echo "  5. PHP Intellisense - PHP Support"
+  echo "  6. PHP Debug - PHP Debugging"
+  echo "  7. Laravel Artisan - Laravel Support"
+  echo "  8. Laravel Blade - Laravel Blade Support"
+  echo "  9. ESLint - JavaScript Linting"
+  echo "  10. Path Intellisense - Path Autocomplete"
+  echo "  11. Intelephense - PHP Support"
+  echo "  12. Prettier - Code Formatting"
+  echo "  13. Quick Select - Quick File Selection"
+  echo "  14. Color Highlight - Color Highlighting"
+  echo "  15. Gradle - Gradle Support"
+  echo ""
+}
+
+print_green() {
+  echo -e "${green}$1..${default}"
+  echo ""
+}
+
 clear
-
-echo "
-██╗    ██╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗
-██║    ██║██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝
-██║ █╗ ██║█████╗  ██║     ██║   ██║██║  ██║█████╗  
-██║███╗██║██╔══╝  ██║     ██║   ██║██║  ██║██╔══╝  
-╚███╔███╔╝███████╗╚██████╗╚██████╔╝██████╔╝███████╗
- ╚══╝╚══╝ ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝                    
-"
-
-# Tell the user what programs will be installed
-echo "The following programs will be installed:"
-echo "  1. Homebrew - Package Manager"
-echo "  2. Command Line Tools - Command Line Tools"
-echo "  3. Visual Studio Code - Code Editor"
-echo "  4. Composer - PHP Package Manager"
-echo "  5. NodeJS - JavaScript Runtime"
-echo "  6. NPM - Node Package Manager"
-echo "  7. Sequel Ace - MySQL Client"
-echo "  8. Slack - Team Communication"
-echo "  9. Google Chrome - Web Browser"
-echo "  10. Postman - API Testing"
-echo "  11. Harvest - Time Tracking"
-echo "  12. ClickUp - Task Management"
-echo ""
-
-# Ask the user if they want to continue
-prompt="Do you want to continue? (y/n)"
-while true; do
-    read -p "$prompt" yn
-    case $yn in
-        [Yy]* ) break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+print_welcome
+prompt_continue
 
 echo ""
 
@@ -88,12 +128,15 @@ echo "Installing Homebrew"
 if test ! $(which brew); then
   # install homebrew
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+else
+  print_green "Homebrew is already installed"
 fi
 
 echo "Installing Command Line Tools"
 # check if xcode-select is installed
 if xcode-select -p &> /dev/null; then
-    echo "Command Line Tools already installed"
+    print_green "Command Line Tools already installed"
+    
 else
     xcode-select --install
 fi
@@ -108,6 +151,7 @@ if test ! $(which code); then
   echo 'export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"' >> ~/.zshrc
 
   # ask the user if they want to install the extensions
+  print_extension_list
   prompt="Do you want to install the extensions for VSCode? (y/n)"
   while true; do
       read -p "$prompt" yn
@@ -119,7 +163,7 @@ if test ! $(which code); then
   done
 
 else
-  echo "Visual Studio Code already installed"
+  print_green "Visual Studio Code is already installed"
 fi
 
 
@@ -129,7 +173,7 @@ if test ! $(which composer); then
   # install composer
   brew install composer
 else
-  echo "Composer already installed"
+  print_green "Composer already installed"
 fi
 
 echo "Installing NodeJS"
@@ -138,7 +182,7 @@ if test ! $(which node); then
   # install nodejs
   brew install node
 else
-  echo "NodeJS already installed"
+  print_green "NodeJS already installed"
 fi
 
 echo "Installing NPM"
@@ -147,7 +191,7 @@ if test ! $(which npm); then
   # install npm
   brew install npm
 else
-  echo "NPM already installed"
+  print_green "NPM already installed"
 fi
 
 echo "Installing Sequel Ace"
@@ -157,7 +201,7 @@ if test ! -d "/Applications/Sequel Ace.app"; then
   # install sequel ace
   brew install --cask sequel-ace
 else
-  echo "Sequel Ace already installed"
+  print_green "Sequel Ace already installed"
 fi
 
 
@@ -167,7 +211,7 @@ if test ! -d "/Applications/Slack.app"; then
   # install slack
   brew install --cask slack
 else
-  echo "Slack already installed"
+  print_green "Slack already installed"
 fi
 
 echo "Installing Google Chrome"
@@ -176,7 +220,7 @@ if test ! -d "/Applications/Slack.app"; then
   # install google chrome
   brew install --cask google-chrome
 else
-  echo "Google Chrome already installed"
+  print_green "Google Chrome already installed"
 fi
 
 echo "Installing Postman"
@@ -185,7 +229,7 @@ if test ! -d "/Applications/Postman.app"; then
   # install postman
   brew install --cask postman
 else
-  echo "Postman already installed"
+  print_green "Postman already installed"
 fi
 
 echo "Installing ClickUp"
@@ -194,7 +238,7 @@ if test ! -d "/Applications/ClickUp.app"; then
   # install clickup
   brew install --cask clickup
 else
-  echo "ClickUp already installed"
+  print_green "ClickUp already installed"
 fi
 
 echo ""
@@ -212,10 +256,11 @@ if test ! -d "/Applications/Harvest.app"; then
 
   open "macappstores://itunes.apple.com/app/id506189836"
 else
-  echo "Harvest already installed"
+  print_green "Harvest already installed"
 fi
 
 sleep 1
 
 echo ""
 echo "- All done! Now you can start coding 😎"
+
