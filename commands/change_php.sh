@@ -6,6 +6,9 @@ Example: cphp 8.1
 
 Available versions:
 $(brew search php | grep php@ | sed 's/php@//g')
+
+Description:
+This script will change the php version used by the command line.
 "
 
 if [ "$1" == "" ]; then
