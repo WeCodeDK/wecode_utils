@@ -284,3 +284,4 @@ sleep 1
 echo ""
 echo "- All done! Now you can start coding 😎"
 
+echo ".. Close this window and open a new terminal window to start using the new commands"
