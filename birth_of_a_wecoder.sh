@@ -71,6 +71,7 @@ print_application_list() {
   echo "  8. Google Chrome - Web Browser"
   echo "  9. Postman - API Testing"
   echo "  10. Harvest - Time Tracking"
+  echo "  11. Mattermost - Internal communication"
   echo ""
 }
 
@@ -246,6 +247,14 @@ install_applications() {
     open "macappstores://itunes.apple.com/app/id506189836"
   else
     print_green "Harvest already installed"
+  fi
+
+  echo "Installing Mattermost"
+  if test ! -d "/Applications/Mattermost.app"; then
+    # install postman
+    brew install --cask mattermost
+  else
+    print_green "Mattermost already installed"
   fi
 }
 
