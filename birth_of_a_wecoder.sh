@@ -11,11 +11,9 @@
 # 6. nodejs
 # 7. npm
 # 8. sequel ace
-# 9. slack
-# 10. google chrome
-# 11. postman
-# 12. harvest
-# 13. clickup
+# 9. google chrome
+# 10. postman
+# 11. harvest
 
 vscode_extensions=(
   Vue.volar
@@ -70,11 +68,10 @@ print_application_list() {
   echo "  5. NodeJS - JavaScript Runtime"
   echo "  6. NPM - Node Package Manager"
   echo "  7. Sequel Ace - MySQL Client"
-  echo "  8. Slack - Team Communication"
-  echo "  9. Google Chrome - Web Browser"
-  echo "  10. Postman - API Testing"
-  echo "  11. Harvest - Time Tracking"
-  echo "  12. ClickUp - Task Management"
+  echo "  8. Google Chrome - Web Browser"
+  echo "  9. Postman - API Testing"
+  echo "  10. Harvest - Time Tracking"
+  echo "  11. Mattermost - Internal communication"
   echo ""
 }
 
@@ -216,18 +213,9 @@ install_applications() {
     print_green "Sequel Ace already installed"
   fi
 
-  echo "Installing Slack"
-  # check if slack is installed and echo if it is
-  if test ! -d "/Applications/Slack.app"; then
-    # install slack
-    brew install --cask slack
-  else
-    print_green "Slack already installed"
-  fi
-
   echo "Installing Google Chrome"
   # check if google chrome is installed and echo if it is
-  if test ! -d "/Applications/Slack.app"; then
+  if test ! -d "/Applications/Chrome.app"; then
     # install google chrome
     brew install --cask google-chrome
   else
@@ -241,15 +229,6 @@ install_applications() {
     brew install --cask postman
   else
     print_green "Postman already installed"
-  fi
-
-  echo "Installing ClickUp"
-  # check if clickup is installed and echo if it is
-  if test ! -d "/Applications/ClickUp.app"; then
-    # install clickup
-    brew install --cask clickup
-  else
-    print_green "ClickUp already installed"
   fi
 
   echo "Installing Harvest"
@@ -268,6 +247,14 @@ install_applications() {
     open "macappstores://itunes.apple.com/app/id506189836"
   else
     print_green "Harvest already installed"
+  fi
+
+  echo "Installing Mattermost"
+  if test ! -d "/Applications/Mattermost.app"; then
+    # install postman
+    brew install --cask mattermost
+  else
+    print_green "Mattermost already installed"
   fi
 }
 
