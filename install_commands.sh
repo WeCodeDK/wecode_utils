@@ -50,7 +50,3 @@ fi
 # tell the user that iphp is installed with a green success
 echo -e "\033[0;32mSucces: \033[0;37miphp installed successfully\n" ;
 
-# usage: iphp "echo 'hello world'"
-# Tell the user how to use the script
-echo -e "\033[0;33mInfo: \033[0;37mUsage: iphp 7.4 artisan migrate\n"
-
